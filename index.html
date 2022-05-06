@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet"  href="main.css"></link>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <div class="app">
+        <div class="input">
+            <input id="toggleAll" class="toggleAll" type="checkbox">
+            <input id="userInput" type="text" placeholder="Yapilacak neler var?" maxlength="40">
+        </div>
+        <div class="menu-bar">
+            <div class="counter" id="counter">1 item left</div>
+            <div class="menu-buttons">
+                <button class="all-button" id="all-button">All </button>
+                <button class="active-button" id="active-button">Active</button>
+                <button class="completed-button" id="completed-button">Completed</button>
+            </div>
+            <div class="clearAll">
+                <button class="clearCompleted" id="clear-all">Clear Completed</button>
+            </div>
+        </div>
+        <div class="list" id="list" > 
+            <!-- <div class="rowList">
+                <div class="checkbox"  id="completedBox" ></div>  
+                <div class="textArea" id="textArea"></div>
+                <div class="    Button" id="deleteButton"></div>
+            </div> -->
+        </div>    
+    </div>
+        <script src="main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+</html>
