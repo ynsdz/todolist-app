@@ -1,8 +1,9 @@
 
 let button = document.getElementById("inputClick");
 let userInput = document. getElementById("userInput");
-let deleteBttn = document.getElementsByClassName(".deleteButton");
-let checkboxBttn = document.getElementsByClassName("checkbox");
+let toggleAll = document.getElementById('toggleAll');
+let checkboxBttn = document.getElementsByClassName('checkbox');
+
 
 const counter = document.getElementById('counter');
 const allBtn = document.getElementById('all-button');
@@ -10,7 +11,7 @@ const activeBtn= document.getElementById('active-button');
 const completedBtn = document.getElementById('completed-button');
 const clearAll = document.getElementById('clear-all');
 const menuBtns =document.getElementsByClassName('menu-buttons');
-const listItems = document.getElementById('list');
+const listItems = document.getElementsByClassName('rowList');
 
 const countItem = () => {
   let itemCount = document.querySelectorAll('.checkbox').length
@@ -33,7 +34,7 @@ const startConf = () => {
 }
 
 const addLocal = () => {
-  
+
   inputText = userInput.value;
   
   const todo = {
@@ -54,13 +55,10 @@ function checkItem(element){
   let found = element.parentElement.children[1].firstChild;
   for(let i=0;i<find.length;i++){
     if(find[i].text == found.data){
-        find[i].isCompleted = !find[i].isCompleted;
-        //  found.parentElement.classList.remove('completedTask');
-        // find[i].isCompleted = !find[i].isCompleted;
+      find[i].isCompleted = !find[i].isCompleted;
       localStorage.setItem('items',JSON.stringify(find));
     }
   }
-  // countFunc();
   // tek tek saydirmaya gerek yok. direkt azalt/arttir
   countItem();
 }
@@ -68,7 +66,7 @@ function checkItem(element){
 
 
 function createNewItem(todo) {
-  
+
   const newDiv = document.createElement("div");
   newDiv.classList.add("rowList");
   document.getElementById("list").appendChild(newDiv);
@@ -90,13 +88,11 @@ function createNewItem(todo) {
   newButton.classList.add("deleteButton");
   newButton.textContent ="Delete";
   document.getElementById('list').lastChild.appendChild(newButton);
-  // newButton.addEventListener('click', function(){
-  //   removeTodo();
-  // });
  
   if(todo.isCompleted){
     newItem.classList  += ' completedTask'; 
   };
+  // listItems = document.getElementsByClassName('rowList');
 }
 
 
@@ -105,8 +101,8 @@ startConf();
 
 userInput.addEventListener('keypress',function(event){
   if (event.code == "Enter") {
-    // ne kadar bosluk bulursa bulsun silmesi lazim String.trim()
-    if(userInput.value !== ' ' || ''){
+    // ne kadar bosluk bulursa bulsun silmesi lazim String.trim() √√√√
+    if(userInput.value.trim().length){
       addLocal();
       countItem();
     }
@@ -115,13 +111,12 @@ userInput.addEventListener('keypress',function(event){
     }
   }
 })
-
 // window.load'dan sonra direkt butona atama yapilmali
-document.addEventListener('click', (e) => {
+Object.values(document.querySelectorAll('.deleteButton')).forEach(item => {
+  item.addEventListener('click', e => {
       let element = e.target;
-      if(element.className == "deleteButton"){     
-        let find = JSON.parse(localStorage.getItem('items'));
-        let found = element.parentElement.children[1].firstChild.data;
+      let find = JSON.parse(localStorage.getItem('items'));
+      let found = element.parentElement.children[1].firstChild.data;
         for(let i=0; i<find.length; i++){
           if(find[i].text == found){
             let todos = JSON.parse(localStorage.getItem('items'));          
@@ -131,82 +126,28 @@ document.addEventListener('click', (e) => {
             // tekrar saydirmaya gerek yok. count'u dusur direkt olarak.
             countItem();
           }
-        }
       }
-      
-  });
+  })
+})
 
-document.addEventListener('click', function(e){
-      let element = e.target;
-      // birden fazla class'da bu calismaz
-      if(element.classList == 'checkbox'){
-        let Element = element.parentElement.children[1];
-        if (this.activeElement.checked) {
-          Element.className += ' completedTask';
-         checkItem(element);
-        } else {
-          element.parentElement.children[1].classList.remove('completedTask');
-          checkItem(element);
-        }
-        
-      }
-      // birden fazla class'da bu calismaz
-      if(element.classList == 'toggleAll'){
-        if(this.activeElement.checked) {
-          for (let i = 0; i < checkboxBttn.length; i++) {
-            let Element = checkboxBttn[i].parentElement.children[1];
-            if(!checkboxBttn[i].checked){
-              checkboxBttn[i].checked = true;
-              Element.className +=' completedTask';
-              checkItem(Element);
-            }
-          }}
-        else{
-          for (let i = 0; i < checkboxBttn.length; i++) {
-            let Element = checkboxBttn[i].parentElement.children[1];
-            if(checkboxBttn[i].checked){
-              checkboxBttn[i].checked= false;
-              Element.classList.remove('completedTask');
-              checkItem(Element);
-            }
-            }
-        }
-         }
-    });
-
-    activeBtn.addEventListener('click',function(){
-      let task = document.querySelectorAll('.textArea');
-      for(let i=0;i<task.length;i++){
-        if($(task[i]).hasClass('completedTask')){
-          task[i].parentElement.style.display = "none";
-        }if(!$(task[i]).hasClass('completedTask')){
-          task[i].parentElement.style.display = "flex";
-        }
-      }
-    })  
-    completedBtn.addEventListener('click',function(){
-      let task = document.querySelectorAll('.textArea');
-      for(let i=0;i<task.length;i++){
-        if(!$(task[i]).hasClass('completedTask')){
-          task[i].parentElement.style.display = "none";
-        }if($(task[i]).hasClass('completedTask')){
-          task[i].parentElement.style.display = "flex";
-        }
-      }
-    })  
-    allBtn.addEventListener('click',function(){
-      let task = document.querySelectorAll('.textArea');
-      for(let i=0;i<task.length;i++){
-          task[i].parentElement.style.display = "flex";
-      }
-    })  
-    // tum kayitlari degil completed olanlari silmesi gerekiyor
+  
+    
+    // tum kayitlari degil completed olanlari silmesi gerekiyor√√√
     clearAll.addEventListener('click',function(){
       if (confirm('Tum kayitlari silmek istediginizden emin misiniz?')) {
-        localStorage.clear();
-        listItems.remove();
-        location.reload();      
+        let itemsArray = JSON.parse(localStorage.getItem('items'));
+        for(let i =0; i<itemsArray.length;){
+          if(itemsArray[i].isCompleted){
+            document.querySelectorAll('.rowList')[i].remove();
+            itemsArray.splice(i,1);
+          } else {
+            i++;
+          }
+        }
+        localStorage.setItem('items', JSON.stringify(itemsArray));
        } else {
-        console.log('tum kayitlar silindi');
+         console.log('islem iptal edildi');
       }
     })
+
+    
