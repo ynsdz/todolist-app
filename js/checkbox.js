@@ -1,16 +1,17 @@
-Object.values(checkboxBttn).forEach((item) =>{
-    item.addEventListener('click', e=>{
-      let element = e.target;
-      let Element = element.parentElement.children[1];
-      if (element.checked) {
-        Element.className += ' completedTask';
-        checkItem(element);
-      } else {
-        element.parentElement.children[1].classList.remove('completedTask');
-        checkItem(element);
-      }
-    })
-  })
+
+const checkBoxfunc = (item) =>{
+  item.addEventListener('click', e=>{
+          let element = e.target;
+          let Element = element.parentElement.children[1];
+          if (element.checked) {
+            Element.className += ' completedTask';
+            checkItem(element);
+          } else {
+            element.parentElement.children[1].classList.remove('completedTask');
+            checkItem(element);
+          }
+        })
+}
 
 toggleAll.addEventListener('click', e =>{
   if(toggleAll.checked) {
