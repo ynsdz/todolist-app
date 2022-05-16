@@ -4,7 +4,6 @@ let userInput = document. getElementById("userInput");
 let toggleAll = document.getElementById('toggleAll');
 let checkboxBttn = document.getElementsByClassName('checkbox');
 
-
 const counter = document.getElementById('counter');
 const allBtn = document.getElementById('all-button');
 const activeBtn= document.getElementById('active-button');
@@ -61,7 +60,6 @@ function checkItem(element){
   // tek tek saydirmaya gerek yok. direkt azalt/arttir
   countItem();
 }
-
 
 
 function createNewItem(todo) {
